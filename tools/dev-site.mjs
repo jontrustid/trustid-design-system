@@ -8,7 +8,7 @@ import { fileURLToPath } from 'node:url';
 
 const root = join(dirname(fileURLToPath(import.meta.url)), '..');
 const node = process.execPath;
-const devPort = process.env.DEV_PORT ?? '5173';
+const devPort = process.env.DEV_PORT ?? '5176';
 
 const procs = [
   spawn(
