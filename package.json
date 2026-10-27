@@ -1,5 +1,5 @@
 {
-  "name": "@jontrustid/design-system",
+  "name": "@jontrustid/trustid-design-system",
   "version": "0.2.5",
   "type": "module",
   "description": "TrustID UI block registry - presentation-only React blocks plus daisyUI themes for the VeriScan web rewrite and related apps.",
