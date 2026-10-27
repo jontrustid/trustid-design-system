@@ -1,4 +1,4 @@
-import type { ComponentPropsWithRef, ReactNode } from 'react';
+import { Fragment, type ComponentPropsWithRef, type ReactNode } from 'react';
 import EmptyState from '../feedback/EmptyState';
 
 export interface DataTableColumn<Row> {
@@ -15,6 +15,11 @@ export interface DataTableProps<Row> extends ComponentPropsWithRef<'div'> {
   columns: DataTableColumn<Row>[];
   rows: Row[];
   rowKey?: (row: Row, index: number) => string | number;
+  /** Per-row classes (e.g. highlight invalid or selected rows). */
+  rowClassName?: (row: Row, index: number) => string | undefined;
+  /** Optional content rendered as a full-width row after each data row —
+   *  e.g. an insert-zone strip between rows. */
+  afterRow?: (row: Row, index: number) => ReactNode;
   onRowClick?: (row: Row) => void;
   /** EmptyState title when rows is empty; omit to render an empty table. */
   emptyTitle?: string;
@@ -31,6 +36,8 @@ export default function DataTable<Row>({
   columns,
   rows,
   rowKey,
+  rowClassName,
+  afterRow,
   onRowClick,
   emptyTitle,
   size = 'sm',
@@ -61,19 +68,30 @@ export default function DataTable<Row>({
         </thead>
         <tbody>
           {rows.map((row, i) => (
-            <tr
-              key={rowKey ? rowKey(row, i) : i}
-              className={onRowClick ? 'cursor-pointer hover:bg-base-200/50' : undefined}
-              onClick={onRowClick ? () => onRowClick(row) : undefined}
-            >
-              {columns.map((col) => (
-                <td key={col.key} className={col.className}>
-                  {col.cell
-                    ? col.cell(row, i)
-                    : String((row as Record<string, unknown>)[col.key] ?? '')}
-                </td>
-              ))}
-            </tr>
+            <Fragment key={rowKey ? rowKey(row, i) : i}>
+              <tr
+                className={cx(
+                  onRowClick && 'cursor-pointer hover:bg-base-200/50',
+                  rowClassName?.(row, i),
+                )}
+                onClick={onRowClick ? () => onRowClick(row) : undefined}
+              >
+                {columns.map((col) => (
+                  <td key={col.key} className={col.className}>
+                    {col.cell
+                      ? col.cell(row, i)
+                      : String((row as Record<string, unknown>)[col.key] ?? '')}
+                  </td>
+                ))}
+              </tr>
+              {afterRow && (
+                <tr>
+                  <td colSpan={columns.length} className="p-0">
+                    {afterRow(row, i)}
+                  </td>
+                </tr>
+              )}
+            </Fragment>
           ))}
         </tbody>
       </table>

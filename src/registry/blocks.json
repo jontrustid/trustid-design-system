@@ -240,6 +240,118 @@
       ]
     },
     {
+      "name": "NotificationItem",
+      "category": "feedback",
+      "status": "ready",
+      "path": "src/blocks/feedback/NotificationItem.tsx",
+      "description": "Single notification row — icon, message, relative timestamp, unread marker and per-item delete. For list and drawer views.",
+      "useCases": ["notification", "notification row", "alert item", "activity feed", "unread message"],
+      "dependencies": ["IconButton", "Icon"],
+      "artifacts": [
+        { "id": "component", "label": "Component (.tsx)", "path": "src/blocks/feedback/NotificationItem.tsx" },
+        { "id": "usage", "label": "Usage / wiring (.tsx)", "path": "src/registry/demos/NotificationItemDemo.tsx" },
+        { "id": "html", "label": "HTML template", "source": "rendered-demo" }
+      ]
+    },
+    {
+      "name": "PageSpinner",
+      "category": "feedback",
+      "status": "ready",
+      "path": "src/blocks/feedback/PageSpinner.tsx",
+      "description": "Full-area centred loading spinner for route/view-level loading states.",
+      "useCases": ["page loading", "view spinner", "route loading", "loading screen"],
+      "dependencies": ["LoadingSpinner"],
+      "artifacts": [
+        { "id": "component", "label": "Component (.tsx)", "path": "src/blocks/feedback/PageSpinner.tsx" },
+        { "id": "usage", "label": "Usage / wiring (.tsx)", "path": "src/registry/demos/PageSpinnerDemo.tsx" },
+        { "id": "html", "label": "HTML template", "source": "rendered-demo" }
+      ]
+    },
+    {
+      "name": "BarChart",
+      "category": "data",
+      "status": "ready",
+      "path": "src/blocks/data/BarChart.tsx",
+      "description": "Minimal value-scaled bar chart row with hover values. Wrap in a Panel for a dashboard card.",
+      "useCases": ["bar chart", "chart", "dashboard chart", "series", "graph"],
+      "dependencies": [],
+      "artifacts": [
+        { "id": "component", "label": "Component (.tsx)", "path": "src/blocks/data/BarChart.tsx" },
+        { "id": "usage", "label": "Usage / wiring (.tsx)", "path": "src/registry/demos/BarChartDemo.tsx" },
+        { "id": "html", "label": "HTML template", "source": "rendered-demo" }
+      ]
+    },
+    {
+      "name": "LineChart",
+      "category": "data",
+      "status": "ready",
+      "path": "src/blocks/data/LineChart.tsx",
+      "description": "SVG line/area chart — one or more series with y gridlines, x labels, optional target reference line and comparison legend.",
+      "useCases": ["line chart", "area chart", "trend chart", "kpi chart", "target line", "timeseries", "graph"],
+      "dependencies": [],
+      "artifacts": [
+        { "id": "component", "label": "Component (.tsx)", "path": "src/blocks/data/LineChart.tsx" },
+        { "id": "usage", "label": "Usage / wiring (.tsx)", "path": "src/registry/demos/LineChartDemo.tsx" },
+        { "id": "html", "label": "HTML template", "source": "rendered-demo" }
+      ]
+    },
+    {
+      "name": "EventList",
+      "category": "data",
+      "status": "ready",
+      "path": "src/blocks/data/EventList.tsx",
+      "description": "Event rows — coloured icon square, title, subtitle and right-aligned date-range meta. For calendar/important-dates cards.",
+      "useCases": ["event list", "calendar events", "important dates", "schedule", "agenda"],
+      "dependencies": [],
+      "artifacts": [
+        { "id": "component", "label": "Component (.tsx)", "path": "src/blocks/data/EventList.tsx" },
+        { "id": "usage", "label": "Usage / wiring (.tsx)", "path": "src/registry/demos/EventListDemo.tsx" },
+        { "id": "html", "label": "HTML template", "source": "rendered-demo" }
+      ]
+    },
+    {
+      "name": "MonthCalendar",
+      "category": "data",
+      "status": "ready",
+      "path": "src/blocks/data/MonthCalendar.tsx",
+      "description": "Month grid calendar — weekday headers, prev/today/next controls, and multi-day event bars with start/end markers.",
+      "useCases": ["calendar", "month view", "events calendar", "important dates", "schedule"],
+      "dependencies": ["Button", "IconButton", "Icon", "LoadingSpinner"],
+      "artifacts": [
+        { "id": "component", "label": "Component (.tsx)", "path": "src/blocks/data/MonthCalendar.tsx" },
+        { "id": "usage", "label": "Usage / wiring (.tsx)", "path": "src/registry/demos/MonthCalendarDemo.tsx" },
+        { "id": "html", "label": "HTML template", "source": "rendered-demo" }
+      ]
+    },
+    {
+      "name": "DashboardCard",
+      "category": "layout",
+      "status": "ready",
+      "path": "src/blocks/layout/DashboardCard.tsx",
+      "description": "Dashboard card chrome — header with icon, title, refresh and full-screen actions, loading state and scrollable content area.",
+      "useCases": ["dashboard card", "chart card", "widget", "kpi card", "tile"],
+      "dependencies": ["Panel", "IconButton", "Icon", "LoadingSpinner"],
+      "artifacts": [
+        { "id": "component", "label": "Component (.tsx)", "path": "src/blocks/layout/DashboardCard.tsx" },
+        { "id": "usage", "label": "Usage / wiring (.tsx)", "path": "src/registry/demos/DashboardCardDemo.tsx" },
+        { "id": "html", "label": "HTML template", "source": "rendered-demo" }
+      ]
+    },
+    {
+      "name": "HeroBanner",
+      "category": "layout",
+      "status": "ready",
+      "path": "src/blocks/layout/HeroBanner.tsx",
+      "description": "Entity hero banner — round logo/avatar (with icon fallback), title, subtitle and an actions slot in a full-width Panel. Tops detail views.",
+      "useCases": ["hero", "banner", "entity header", "record header", "detail header", "page hero"],
+      "dependencies": ["Panel"],
+      "artifacts": [
+        { "id": "component", "label": "Component (.tsx)", "path": "src/blocks/layout/HeroBanner.tsx" },
+        { "id": "usage", "label": "Usage / wiring (.tsx)", "path": "src/registry/demos/HeroBannerDemo.tsx" },
+        { "id": "html", "label": "HTML template", "source": "rendered-demo" }
+      ]
+    },
+    {
       "name": "WizardStepper",
       "category": "navigation",
       "status": "ready",
@@ -348,6 +460,20 @@
       "artifacts": [
         { "id": "component", "label": "Component (.tsx)", "path": "src/blocks/overlay/ConfirmDialog.tsx" },
         { "id": "usage", "label": "Usage / wiring (.tsx)", "path": "src/registry/demos/ConfirmDialogDemo.tsx" },
+        { "id": "html", "label": "HTML template", "source": "rendered-demo" }
+      ]
+    },
+    {
+      "name": "Drawer",
+      "category": "overlay",
+      "status": "ready",
+      "path": "src/blocks/overlay/Drawer.tsx",
+      "description": "Edge-anchored slide-over panel with header, scrollable content and footer — notifications trays, detail inspectors, filter panels.",
+      "useCases": ["drawer", "slide over", "side panel", "notifications tray", "sidebar panel", "inspector"],
+      "dependencies": ["IconButton", "Icon"],
+      "artifacts": [
+        { "id": "component", "label": "Component (.tsx)", "path": "src/blocks/overlay/Drawer.tsx" },
+        { "id": "usage", "label": "Usage / wiring (.tsx)", "path": "src/registry/demos/DrawerDemo.tsx" },
         { "id": "html", "label": "HTML template", "source": "rendered-demo" }
       ]
     },
@@ -478,6 +604,146 @@
       ]
     },
     {
+      "name": "SearchField",
+      "category": "forms",
+      "status": "ready",
+      "path": "src/blocks/forms/SearchField.tsx",
+      "description": "Framed input with a leading icon and an optional clear (×) button; label is optional so it doubles as a compact inline input.",
+      "useCases": ["search box", "search input", "inline input", "filter input", "clear button", "compact input"],
+      "dependencies": [],
+      "artifacts": [
+        { "id": "component", "label": "Component (.tsx)", "path": "src/blocks/forms/SearchField.tsx" },
+        { "id": "usage", "label": "Usage / wiring (.tsx)", "path": "src/registry/demos/SearchFieldDemo.tsx" },
+        { "id": "html", "label": "HTML template", "source": "rendered-demo" }
+      ]
+    },
+    {
+      "name": "ToggleField",
+      "category": "forms",
+      "status": "ready",
+      "path": "src/blocks/forms/ToggleField.tsx",
+      "description": "Labelled on/off switch — the toggle counterpart to CheckboxField, with tone and size options.",
+      "useCases": ["switch", "toggle", "on off", "enable disable", "boolean switch", "setting switch"],
+      "dependencies": [],
+      "artifacts": [
+        { "id": "component", "label": "Component (.tsx)", "path": "src/blocks/forms/ToggleField.tsx" },
+        { "id": "usage", "label": "Usage / wiring (.tsx)", "path": "src/registry/demos/ToggleFieldDemo.tsx" },
+        { "id": "html", "label": "HTML template", "source": "rendered-demo" }
+      ]
+    },
+    {
+      "name": "IconButton",
+      "category": "forms",
+      "status": "ready",
+      "path": "src/blocks/forms/IconButton.tsx",
+      "description": "Square icon-only button (ghost by default) with a required accessible label — for toolbars, card menus and inline affordances.",
+      "useCases": ["icon button", "toolbar button", "menu trigger", "square button", "icon action", "compact button"],
+      "dependencies": ["Button"],
+      "artifacts": [
+        { "id": "component", "label": "Component (.tsx)", "path": "src/blocks/forms/IconButton.tsx" },
+        { "id": "usage", "label": "Usage / wiring (.tsx)", "path": "src/registry/demos/IconButtonDemo.tsx" },
+        { "id": "html", "label": "HTML template", "source": "rendered-demo" }
+      ]
+    },
+    {
+      "name": "Input",
+      "category": "forms",
+      "status": "ready",
+      "path": "src/blocks/forms/Input.tsx",
+      "description": "Bare styled input for inline editing inside tables and composite controls where a labelled field would be too heavy. Prefer TextField elsewhere.",
+      "useCases": ["bare input", "inline edit", "table cell input", "unlabelled input", "number cell", "primitive input"],
+      "dependencies": [],
+      "artifacts": [
+        { "id": "component", "label": "Component (.tsx)", "path": "src/blocks/forms/Input.tsx" },
+        { "id": "usage", "label": "Usage / wiring (.tsx)", "path": "src/registry/demos/InputDemo.tsx" },
+        { "id": "html", "label": "HTML template", "source": "rendered-demo" }
+      ]
+    },
+    {
+      "name": "Icon",
+      "category": "media",
+      "status": "ready",
+      "path": "src/blocks/media/Icon.tsx",
+      "description": "Stroke-icon set (Feather-style) shared by blocks and apps; name-driven so consumers never hand-write SVGs.",
+      "useCases": ["icon", "glyph", "svg icon", "menu icon", "status icon", "inline icon"],
+      "dependencies": [],
+      "artifacts": [
+        { "id": "component", "label": "Component (.tsx)", "path": "src/blocks/media/Icon.tsx" },
+        { "id": "usage", "label": "Usage / wiring (.tsx)", "path": "src/registry/demos/IconDemo.tsx" },
+        { "id": "html", "label": "HTML template", "source": "rendered-demo" }
+      ]
+    },
+    {
+      "name": "Avatar",
+      "category": "media",
+      "status": "ready",
+      "path": "src/blocks/media/Avatar.tsx",
+      "description": "Round profile image in fixed sizes with an optional online/offline presence dot.",
+      "useCases": ["avatar", "profile photo", "user image", "presence", "online status", "analyst photo"],
+      "dependencies": [],
+      "artifacts": [
+        { "id": "component", "label": "Component (.tsx)", "path": "src/blocks/media/Avatar.tsx" },
+        { "id": "usage", "label": "Usage / wiring (.tsx)", "path": "src/registry/demos/AvatarDemo.tsx" },
+        { "id": "html", "label": "HTML template", "source": "rendered-demo" }
+      ]
+    },
+    {
+      "name": "InfoBanner",
+      "category": "feedback",
+      "status": "ready",
+      "path": "src/blocks/feedback/InfoBanner.tsx",
+      "description": "Informational banner with a headline and optional name/value detail rows — 'page in development' notices and session summaries.",
+      "useCases": ["info banner", "notice", "dev placeholder", "session summary", "key value banner", "information message"],
+      "dependencies": ["Alert"],
+      "artifacts": [
+        { "id": "component", "label": "Component (.tsx)", "path": "src/blocks/feedback/InfoBanner.tsx" },
+        { "id": "usage", "label": "Usage / wiring (.tsx)", "path": "src/registry/demos/InfoBannerDemo.tsx" },
+        { "id": "html", "label": "HTML template", "source": "rendered-demo" }
+      ]
+    },
+    {
+      "name": "StatCard",
+      "category": "data",
+      "status": "ready",
+      "path": "src/blocks/data/StatCard.tsx",
+      "description": "Headline stat with a trend line comparing to the previous period — dashboard KPI tile.",
+      "useCases": ["stat card", "kpi tile", "dashboard stat", "trend", "metric card", "headline number"],
+      "dependencies": ["Panel", "Icon"],
+      "artifacts": [
+        { "id": "component", "label": "Component (.tsx)", "path": "src/blocks/data/StatCard.tsx" },
+        { "id": "usage", "label": "Usage / wiring (.tsx)", "path": "src/registry/demos/StatCardDemo.tsx" },
+        { "id": "html", "label": "HTML template", "source": "rendered-demo" }
+      ]
+    },
+    {
+      "name": "KpiCard",
+      "category": "data",
+      "status": "ready",
+      "path": "src/blocks/data/KpiCard.tsx",
+      "description": "Compact KPI tile — tinted icon, headline value and a one-line description for ops headers.",
+      "useCases": ["kpi card", "metric tile", "ops header", "pool stats", "queue metrics", "stat tile"],
+      "dependencies": ["Panel"],
+      "artifacts": [
+        { "id": "component", "label": "Component (.tsx)", "path": "src/blocks/data/KpiCard.tsx" },
+        { "id": "usage", "label": "Usage / wiring (.tsx)", "path": "src/registry/demos/KpiCardDemo.tsx" },
+        { "id": "html", "label": "HTML template", "source": "rendered-demo" }
+      ]
+    },
+    {
+      "name": "StatList",
+      "category": "data",
+      "status": "ready",
+      "path": "src/blocks/data/StatList.tsx",
+      "description": "Compact icon/label/value stat rows with an optional emphasised total row — KPI lists inside column and panel headers.",
+      "useCases": ["kpi list", "stat rows", "metrics list", "column stats", "pool kpis", "label value rows", "total row"],
+      "dependencies": [],
+      "artifacts": [
+        { "id": "component", "label": "Component (.tsx)", "path": "src/blocks/data/StatList.tsx" },
+        { "id": "usage", "label": "Usage / wiring (.tsx)", "path": "src/registry/demos/StatListDemo.tsx" },
+        { "id": "html", "label": "HTML template", "source": "rendered-demo" }
+      ]
+    },
+    {
       "name": "ImageCrop",
       "category": "media",
       "status": "ready",
@@ -502,6 +768,202 @@
       "artifacts": [
         { "id": "component", "label": "Component (.tsx)", "path": "src/blocks/media/FaceMatchView.tsx" },
         { "id": "usage", "label": "Usage / wiring (.tsx)", "path": "src/registry/demos/FaceMatchViewDemo.tsx" },
+        { "id": "html", "label": "HTML template", "source": "rendered-demo" }
+      ]
+    },
+    {
+      "name": "Button",
+      "category": "forms",
+      "status": "ready",
+      "path": "src/blocks/forms/Button.tsx",
+      "description": "The base button — tones (primary/success/error…), variants (solid/outline/ghost/soft/link), sizes, icon and loading state.",
+      "useCases": ["button", "cta", "submit", "action"],
+      "dependencies": [],
+      "artifacts": [
+        { "id": "component", "label": "Component (.tsx)", "path": "src/blocks/forms/Button.tsx" },
+        { "id": "usage", "label": "Usage / wiring (.tsx)", "path": "src/registry/demos/ButtonDemo.tsx" },
+        { "id": "html", "label": "HTML template", "source": "rendered-demo" }
+      ]
+    },
+    {
+      "name": "ActionBar",
+      "category": "forms",
+      "status": "ready",
+      "path": "src/blocks/forms/ActionBar.tsx",
+      "description": "A row of related action buttons — decisions, footer buttons, toolbars. Per-action tone/variant/danger.",
+      "useCases": ["action bar", "button row", "footer buttons", "decisions"],
+      "dependencies": ["Button"],
+      "artifacts": [
+        { "id": "component", "label": "Component (.tsx)", "path": "src/blocks/forms/ActionBar.tsx" },
+        { "id": "usage", "label": "Usage / wiring (.tsx)", "path": "src/registry/demos/ActionBarDemo.tsx" },
+        { "id": "html", "label": "HTML template", "source": "rendered-demo" }
+      ]
+    },
+    {
+      "name": "ChoiceTiles",
+      "category": "forms",
+      "status": "ready",
+      "path": "src/blocks/forms/ChoiceTiles.tsx",
+      "description": "Single-select tile grid — like RadioGroup but rendered as outline/primary buttons.",
+      "useCases": ["choice tiles", "segmented picker", "single select", "radio buttons"],
+      "dependencies": ["Button"],
+      "artifacts": [
+        { "id": "component", "label": "Component (.tsx)", "path": "src/blocks/forms/ChoiceTiles.tsx" },
+        { "id": "usage", "label": "Usage / wiring (.tsx)", "path": "src/registry/demos/ChoiceTilesDemo.tsx" },
+        { "id": "html", "label": "HTML template", "source": "rendered-demo" }
+      ]
+    },
+    {
+      "name": "PresetTextField",
+      "category": "forms",
+      "status": "ready",
+      "path": "src/blocks/forms/PresetTextField.tsx",
+      "description": "Text input with an attached dropdown of categorised canned/preset phrases inserted on pick.",
+      "useCases": ["preset text", "canned phrases", "templates", "quick reply"],
+      "dependencies": ["TextField", "DropdownMenu"],
+      "artifacts": [
+        { "id": "component", "label": "Component (.tsx)", "path": "src/blocks/forms/PresetTextField.tsx" },
+        { "id": "usage", "label": "Usage / wiring (.tsx)", "path": "src/registry/demos/PresetTextFieldDemo.tsx" },
+        { "id": "html", "label": "HTML template", "source": "rendered-demo" }
+      ]
+    },
+    {
+      "name": "Panel",
+      "category": "layout",
+      "status": "ready",
+      "path": "src/blocks/layout/Panel.tsx",
+      "description": "Bordered card with an optional title row, actions slot, hint text and body — the standard content container.",
+      "useCases": ["panel", "card", "container", "section"],
+      "dependencies": [],
+      "artifacts": [
+        { "id": "component", "label": "Component (.tsx)", "path": "src/blocks/layout/Panel.tsx" },
+        { "id": "usage", "label": "Usage / wiring (.tsx)", "path": "src/registry/demos/PanelDemo.tsx" },
+        { "id": "html", "label": "HTML template", "source": "rendered-demo" }
+      ]
+    },
+    {
+      "name": "PageHeader",
+      "category": "layout",
+      "status": "ready",
+      "path": "src/blocks/layout/PageHeader.tsx",
+      "description": "Page title row — optional back button, status chips, muted meta and a right-aligned actions slot.",
+      "useCases": ["page header", "view title", "back button", "breadcrumbs"],
+      "dependencies": ["Button"],
+      "artifacts": [
+        { "id": "component", "label": "Component (.tsx)", "path": "src/blocks/layout/PageHeader.tsx" },
+        { "id": "usage", "label": "Usage / wiring (.tsx)", "path": "src/registry/demos/PageHeaderDemo.tsx" },
+        { "id": "html", "label": "HTML template", "source": "rendered-demo" }
+      ]
+    },
+    {
+      "name": "SectionTitle",
+      "category": "layout",
+      "status": "ready",
+      "path": "src/blocks/layout/SectionTitle.tsx",
+      "description": "Small uppercase section heading used inside panels, with an optional right-aligned action slot.",
+      "useCases": ["section title", "subheading", "group label"],
+      "dependencies": [],
+      "artifacts": [
+        { "id": "component", "label": "Component (.tsx)", "path": "src/blocks/layout/SectionTitle.tsx" },
+        { "id": "usage", "label": "Usage / wiring (.tsx)", "path": "src/registry/demos/SectionTitleDemo.tsx" },
+        { "id": "html", "label": "HTML template", "source": "rendered-demo" }
+      ]
+    },
+    {
+      "name": "Toolbar",
+      "category": "layout",
+      "status": "ready",
+      "path": "src/blocks/layout/Toolbar.tsx",
+      "description": "Flex-wrap row for filters and action groups above content, with vertical alignment options.",
+      "useCases": ["toolbar", "filter bar", "actions row"],
+      "dependencies": [],
+      "artifacts": [
+        { "id": "component", "label": "Component (.tsx)", "path": "src/blocks/layout/Toolbar.tsx" },
+        { "id": "usage", "label": "Usage / wiring (.tsx)", "path": "src/registry/demos/ToolbarDemo.tsx" },
+        { "id": "html", "label": "HTML template", "source": "rendered-demo" }
+      ]
+    },
+    {
+      "name": "DataTable",
+      "category": "data",
+      "status": "ready",
+      "path": "src/blocks/data/DataTable.tsx",
+      "description": "Bordered table — typed columns with custom cell renderers, row classes, afterRow slots, click handling and empty state.",
+      "useCases": ["table", "data grid", "list", "rows"],
+      "dependencies": ["EmptyState"],
+      "artifacts": [
+        { "id": "component", "label": "Component (.tsx)", "path": "src/blocks/data/DataTable.tsx" },
+        { "id": "usage", "label": "Usage / wiring (.tsx)", "path": "src/registry/demos/DataTableDemo.tsx" },
+        { "id": "html", "label": "HTML template", "source": "rendered-demo" }
+      ]
+    },
+    {
+      "name": "ItemList",
+      "category": "data",
+      "status": "ready",
+      "path": "src/blocks/data/ItemList.tsx",
+      "description": "Divided rows of titled items with subtitle, trailing meta and action slot — optionally selectable.",
+      "useCases": ["item list", "rows", "document list", "queue"],
+      "dependencies": [],
+      "artifacts": [
+        { "id": "component", "label": "Component (.tsx)", "path": "src/blocks/data/ItemList.tsx" },
+        { "id": "usage", "label": "Usage / wiring (.tsx)", "path": "src/registry/demos/ItemListDemo.tsx" },
+        { "id": "html", "label": "HTML template", "source": "rendered-demo" }
+      ]
+    },
+    {
+      "name": "CardGrid",
+      "category": "data",
+      "status": "ready",
+      "path": "src/blocks/data/CardGrid.tsx",
+      "description": "Selectable card tiles with an optional image header — pickers and reference catalogues.",
+      "useCases": ["card grid", "tiles", "picker", "gallery"],
+      "dependencies": [],
+      "artifacts": [
+        { "id": "component", "label": "Component (.tsx)", "path": "src/blocks/data/CardGrid.tsx" },
+        { "id": "usage", "label": "Usage / wiring (.tsx)", "path": "src/registry/demos/CardGridDemo.tsx" },
+        { "id": "html", "label": "HTML template", "source": "rendered-demo" }
+      ]
+    },
+    {
+      "name": "KeyValueList",
+      "category": "data",
+      "status": "ready",
+      "path": "src/blocks/data/KeyValueList.tsx",
+      "description": "Label/value pairs in a definition list — metadata and detail panels.",
+      "useCases": ["key value", "definition list", "metadata", "details"],
+      "dependencies": [],
+      "artifacts": [
+        { "id": "component", "label": "Component (.tsx)", "path": "src/blocks/data/KeyValueList.tsx" },
+        { "id": "usage", "label": "Usage / wiring (.tsx)", "path": "src/registry/demos/KeyValueListDemo.tsx" },
+        { "id": "html", "label": "HTML template", "source": "rendered-demo" }
+      ]
+    },
+    {
+      "name": "Badge",
+      "category": "feedback",
+      "status": "ready",
+      "path": "src/blocks/feedback/Badge.tsx",
+      "description": "Generic labelled chip — tones, soft/outline styles and sizes. Use StatusBadge for the application-status enum.",
+      "useCases": ["badge", "chip", "tag", "label"],
+      "dependencies": [],
+      "artifacts": [
+        { "id": "component", "label": "Component (.tsx)", "path": "src/blocks/feedback/Badge.tsx" },
+        { "id": "usage", "label": "Usage / wiring (.tsx)", "path": "src/registry/demos/BadgeDemo.tsx" },
+        { "id": "html", "label": "HTML template", "source": "rendered-demo" }
+      ]
+    },
+    {
+      "name": "DropdownMenu",
+      "category": "overlay",
+      "status": "ready",
+      "path": "src/blocks/overlay/DropdownMenu.tsx",
+      "description": "Dropdown — trigger button plus a menu of actions, flat or grouped, with danger/disabled states.",
+      "useCases": ["dropdown", "menu", "context menu", "actions menu"],
+      "dependencies": [],
+      "artifacts": [
+        { "id": "component", "label": "Component (.tsx)", "path": "src/blocks/overlay/DropdownMenu.tsx" },
+        { "id": "usage", "label": "Usage / wiring (.tsx)", "path": "src/registry/demos/DropdownMenuDemo.tsx" },
         { "id": "html", "label": "HTML template", "source": "rendered-demo" }
       ]
     }

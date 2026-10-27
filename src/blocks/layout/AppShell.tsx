@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import type { ComponentPropsWithRef, ReactNode } from 'react';
 
 export interface NavItem {
@@ -8,21 +8,45 @@ export interface NavItem {
   /** Visible only to these roles. Omit to show to everyone. */
   roles?: string[];
   badge?: string;
+  /** Child items — renders the row as a collapsible group. */
+  children?: NavItem[];
 }
 
 export interface ShellUser {
   name: string;
-  role: string;
-  org: string;
+  /** Secondary line under the name in the header (e.g. role) — hidden when absent. */
+  role?: string;
+  /** Org badge next to the app name — hidden when absent. */
+  org?: string;
+  /** Shown under the name in the user menu (e.g. email/username). */
+  email?: string;
   /** Display picture URL — a default silhouette shows when absent. */
   photoUrl?: string;
 }
 
+export interface ShellMenuAction {
+  id: string;
+  label: string;
+  icon?: ReactNode;
+  onSelect?: () => void;
+}
+
 export interface AppShellProps extends ComponentPropsWithRef<'div'> {
   appName?: string;
+  /** Logo/image rendered in the side-nav header instead of the appName text. */
+  logo?: ReactNode;
   navItems: NavItem[];
   activeNavId?: string;
   user: ShellUser;
+  /** Extra controls in the header, before the user cluster (e.g. a
+   *  notifications bell IconButton). */
+  headerActions?: ReactNode;
+  /** Content rendered in the user menu between the identity header and the
+   *  actions — e.g. a settings section with toggles. */
+  userMenu?: ReactNode;
+  /** Custom user-menu actions. When omitted, a default "My account" item
+   *  emits onNavigate('account'). Pass [] for none. */
+  menuActions?: ShellMenuAction[];
   onNavigate?: (id: string) => void;
   onSignOut?: () => void;
   /** The shell fills its parent; give the parent a height (e.g. h-dvh). */
@@ -35,9 +59,13 @@ function cx(...classes: Array<string | false | null | undefined>) {
 
 export default function AppShell({
   appName = 'VeriScan',
+  logo,
   navItems,
   activeNavId,
   user,
+  headerActions,
+  userMenu,
+  menuActions,
   onNavigate,
   onSignOut,
   children,
@@ -46,9 +74,97 @@ export default function AppShell({
   ...rest
 }: AppShellProps) {
   const [drawerOpen, setDrawerOpen] = useState(false);
+  const [openGroups, setOpenGroups] = useState<Set<string>>(() => {
+    const open = new Set<string>();
+    for (const item of navItems) {
+      if (item.children?.some((c) => c.id === activeNavId)) open.add(item.id);
+    }
+    return open;
+  });
   const visibleItems = navItems.filter(
-    (item) => !item.roles || item.roles.includes(user.role),
+    (item) => !item.roles || (user.role !== undefined && item.roles.includes(user.role)),
   );
+
+  // The group holding the active page stays open when navigation lands in it.
+  useEffect(() => {
+    const parent = visibleItems.find(
+      (item) =>
+        item.id === activeNavId ||
+        item.children?.some((c) => c.id === activeNavId),
+    );
+    if (parent) {
+      setOpenGroups((prev) => {
+        if (prev.has(parent.id)) return prev;
+        const next = new Set(prev);
+        next.add(parent.id);
+        return next;
+      });
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [activeNavId]);
+
+  function toggleGroup(id: string) {
+    setOpenGroups((prev) => {
+      const next = new Set(prev);
+      if (next.has(id)) next.delete(id);
+      else next.add(id);
+      return next;
+    });
+  }
+
+  function renderItem(item: NavItem) {
+    const active = item.id === activeNavId;
+    if (item.children?.length) {
+      return (
+        <details open={openGroups.has(item.id)}>
+          <summary
+            className={active ? 'menu-active' : undefined}
+            aria-current={active ? 'page' : undefined}
+            onClick={(e) => {
+              e.preventDefault();
+              toggleGroup(item.id);
+              onNavigate?.(item.id);
+            }}
+          >
+            {item.icon}
+            <span className="flex-1">{item.label}</span>
+          </summary>
+          <ul>
+            {item.children.map((child) => (
+              <li key={child.id}>
+                <a
+                  className={child.id === activeNavId ? 'menu-active' : undefined}
+                  aria-current={child.id === activeNavId ? 'page' : undefined}
+                  onClick={() => {
+                    onNavigate?.(child.id);
+                    setDrawerOpen(false);
+                  }}
+                >
+                  {child.icon}
+                  <span className="flex-1">{child.label}</span>
+                  {child.badge && <span className="badge badge-sm">{child.badge}</span>}
+                </a>
+              </li>
+            ))}
+          </ul>
+        </details>
+      );
+    }
+    return (
+      <a
+        className={active ? 'menu-active' : undefined}
+        aria-current={active ? 'page' : undefined}
+        onClick={() => {
+          onNavigate?.(item.id);
+          setDrawerOpen(false);
+        }}
+      >
+        {item.icon}
+        <span className="flex-1">{item.label}</span>
+        {item.badge && <span className="badge badge-sm">{item.badge}</span>}
+      </a>
+    );
+  }
 
   return (
     <div
@@ -87,13 +203,22 @@ export default function AppShell({
             </svg>
           </label>
 
-          <span className="text-lg font-semibold text-primary">{appName}</span>
-          <span className="badge badge-outline badge-sm hidden sm:inline-flex">{user.org}</span>
+          {!logo && (
+            <span className="text-lg font-semibold text-primary">{appName}</span>
+          )}
+          {user.org && (
+            <span className="badge badge-outline badge-sm hidden sm:inline-flex">
+              {user.org}
+            </span>
+          )}
 
           <div className="ms-auto flex items-center gap-3">
+            {headerActions}
             <div className="hidden text-end sm:block">
               <p className="text-sm font-medium leading-tight">{user.name}</p>
-              <p className="text-xs capitalize text-base-content/60">{user.role}</p>
+              {user.role && (
+                <p className="text-xs capitalize text-base-content/60">{user.role}</p>
+              )}
             </div>
             <div className="dropdown dropdown-end">
               <button type="button" tabIndex={0} className="btn btn-ghost btn-circle avatar avatar-placeholder">
@@ -112,18 +237,55 @@ export default function AppShell({
                   )}
                 </span>
               </button>
-              <ul
+              <div
                 tabIndex={0}
-                className="menu dropdown-content z-10 mt-2 w-48 rounded-box border border-base-300 bg-base-100 p-2 shadow-md"
+                className="dropdown-content z-10 mt-2 w-72 rounded-box border border-base-300 bg-base-100 shadow-md"
               >
-                {user.name ? <li className="menu-title">{user.name}</li> : null}
-                <li>
-                  <a onClick={() => onNavigate?.('account')}>My account</a>
-                </li>
-                <li>
-                  <a onClick={onSignOut}>Sign out</a>
-                </li>
-              </ul>
+                <div className="flex items-center gap-3 border-b border-base-200 p-3">
+                  <span className="avatar avatar-placeholder h-11 w-11 shrink-0 overflow-hidden rounded-full bg-neutral text-neutral-content">
+                    {user.photoUrl ? (
+                      <img src={user.photoUrl} alt="" className="h-full w-full object-cover" />
+                    ) : (
+                      <svg
+                        viewBox="0 0 24 24"
+                        fill="currentColor"
+                        className="m-auto mt-2 h-7 w-7"
+                        aria-hidden="true"
+                      >
+                        <path d="M12 12a4.5 4.5 0 1 0-4.5-4.5A4.5 4.5 0 0 0 12 12Zm0 2c-3.6 0-8 1.8-8 5v1h16v-1c0-3.2-4.4-5-8-5Z" />
+                      </svg>
+                    )}
+                  </span>
+                  <div className="min-w-0">
+                    <p className="truncate font-medium">{user.name}</p>
+                    {user.email && (
+                      <p className="truncate text-xs text-base-content/60">{user.email}</p>
+                    )}
+                  </div>
+                </div>
+                {userMenu}
+                <ul className="menu p-2">
+                  {(menuActions ?? [{ id: 'account', label: 'My account' }]).map(
+                    (action) => (
+                      <li key={action.id}>
+                        <a
+                          onClick={() =>
+                            action.onSelect ? action.onSelect() : onNavigate?.(action.id)
+                          }
+                        >
+                          {action.icon}
+                          {action.label}
+                        </a>
+                      </li>
+                    ),
+                  )}
+                  {onSignOut && (
+                    <li>
+                      <a onClick={onSignOut}>Sign out</a>
+                    </li>
+                  )}
+                </ul>
+              </div>
             </div>
           </div>
         </header>
@@ -139,26 +301,15 @@ export default function AppShell({
         />
         <aside className="flex min-h-full w-64 flex-col bg-base-100">
           <div className="flex min-h-16 flex-col justify-center border-b border-base-300 px-4">
-            <span className="text-lg font-semibold text-primary">{appName}</span>
+            {logo ?? (
+              <span className="text-lg font-semibold text-primary">{appName}</span>
+            )}
             <p className="text-xs text-base-content/60">Document verification</p>
           </div>
           <nav className="flex-1 overflow-y-auto">
             <ul className="menu gap-1 p-3">
               {visibleItems.map((item) => (
-                <li key={item.id}>
-                  <a
-                    className={item.id === activeNavId ? 'menu-active' : undefined}
-                    aria-current={item.id === activeNavId ? 'page' : undefined}
-                    onClick={() => {
-                      onNavigate?.(item.id);
-                      setDrawerOpen(false);
-                    }}
-                  >
-                    {item.icon}
-                    <span className="flex-1">{item.label}</span>
-                    {item.badge && <span className="badge badge-sm">{item.badge}</span>}
-                  </a>
-                </li>
+                <li key={item.id}>{renderItem(item)}</li>
               ))}
             </ul>
           </nav>

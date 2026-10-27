@@ -15,12 +15,21 @@ export interface LoginFormValues {
 
 export interface LoginFormProps extends Omit<ComponentPropsWithRef<'form'>, 'onSubmit'> {
   environments: LoginEnvironment[];
+  /** Preselect an environment (defaults to the first). */
+  defaultEnvironmentId?: string;
   /** Show the one-time code field (second auth step). */
   requireMfa?: boolean;
   loading?: boolean;
   /** External error to surface (e.g. rejected credentials). */
   error?: string;
   onSubmit?: (values: LoginFormValues) => void;
+  /** Label for the SSO button — when set with `onSso`, a secondary
+   *  single-sign-on button is shown under the submit button. */
+  ssoLabel?: string;
+  /** SSO sign-in — called with the currently selected environment id. */
+  onSso?: (environmentId: string) => void;
+  /** Disable the SSO button (e.g. while an SSO attempt is in flight). */
+  ssoLoading?: boolean;
 }
 
 function cx(...classes: Array<string | false | null | undefined>) {
@@ -29,15 +38,21 @@ function cx(...classes: Array<string | false | null | undefined>) {
 
 export default function LoginForm({
   environments,
+  defaultEnvironmentId,
   requireMfa = false,
   loading = false,
   error,
   onSubmit,
+  ssoLabel,
+  onSso,
+  ssoLoading = false,
   className,
   ref,
   ...rest
 }: LoginFormProps) {
-  const [environment, setEnvironment] = useState(environments[0]?.id ?? '');
+  const [environment, setEnvironment] = useState(
+    defaultEnvironmentId ?? environments[0]?.id ?? '',
+  );
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [mfaCode, setMfaCode] = useState('');
@@ -123,6 +138,21 @@ export default function LoginForm({
           {loading && <span className="loading loading-spinner loading-sm" />}
           {requireMfa ? 'Verify and sign in' : 'Sign in'}
         </button>
+
+        {ssoLabel && onSso && (
+          <>
+            <div className="divider my-0 text-xs">or</div>
+            <button
+              type="button"
+              className="btn btn-outline w-full"
+              disabled={loading || ssoLoading}
+              onClick={() => onSso(environment)}
+            >
+              {ssoLoading && <span className="loading loading-spinner loading-sm" />}
+              {ssoLabel}
+            </button>
+          </>
+        )}
       </div>
     </form>
   );
